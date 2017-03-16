@@ -1,5 +1,7 @@
 package org.exite.RestExAPI;
 
+import java.util.List;
+
 public class RestExAPI implements IRestExAPI
 {
 	private final String url="https://api-service.edi.su/Api/Dixy/";	
@@ -10,6 +12,20 @@ public class RestExAPI implements IRestExAPI
 		AuthorizeRequest req=new AuthorizeRequest(login, pass);
 		AuthorizeResponse resp=(AuthorizeResponse)Http.post(url+"Index/Authorize", req , AuthorizeResponse.class);				
 		return resp.varToken;
+	}
+	@Override
+	public List<Company> getCompanies(String authToken, String varGln) 
+	{		
+		CompanyInfoRequest req=new CompanyInfoRequest(authToken, varGln);		
+		CompanyInfoResponse resp=(CompanyInfoResponse)Http.post(url+"CompanyInfo/getData", req, CompanyInfoResponse.class);
+		return resp.COMPANIES;
+	}
+	@Override
+	public List<Event> getEvents(String authToken, String timeFrom, String timeTo) 
+	{		
+		TimeLineRequest req=new TimeLineRequest(authToken, timeFrom, timeTo);
+		TimeLineResponse resp=(TimeLineResponse)Http.post(url+"TimeLine/GetTimeLine", req, TimeLineResponse.class);
+		return resp.timeline;
 	}
 	
 }
