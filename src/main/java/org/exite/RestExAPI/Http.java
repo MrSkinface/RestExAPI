@@ -153,3 +153,98 @@ class Event
 				+ ", need_reply_reciept=" + need_reply_reciept + "]";
 	}	
 }
+class GetContentRequest extends Request
+{
+	public String identifier;
+	public GetContentRequest() {	}
+	public GetContentRequest(String varToken, String identifier) 
+	{	
+		this.varToken=varToken;
+		this.identifier=identifier;
+	}
+	@Override
+	public String toString() {
+		return "GetContentRequest [identifier=" + identifier + ", varToken=" + varToken + "]";
+	}	
+}
+
+class GetContentResponse extends Response	
+{	
+	public String body;
+	public String sign;
+	public GetContentResponse() {	}
+	@Override
+	public String toString() {
+		return "GetContentResponse [body=" + body + ", sign=" + sign + ", varMessage=" + varMessage + ", intCode="
+				+ intCode + "]";
+	}	
+}
+
+class Entity
+{
+	public String body;
+	public String sign;
+	public Entity() {	}
+	public Entity(String body,String sign) 
+	{	
+		this.body=body;
+		this.sign=sign;
+	}
+	@Override
+	public String toString() {
+		return "Entity [body=" + body + ", sign=" + sign + "]";
+	}	
+}
+class CreateTicketRequest extends Request
+{
+	public String identifier;
+	public String signer_fname;
+	public String signer_sname;
+	public String signer_position;
+	public String signer_inn;
+	public CreateTicketRequest() {	}
+	public CreateTicketRequest(String varToken,String identifier,String signer_fname,String signer_sname,String signer_position,String signer_inn) 
+	{	
+		this.varToken=varToken;
+		this.identifier=identifier;
+		this.signer_fname=signer_fname;
+		this.signer_sname=signer_sname;
+		this.signer_position=signer_position;
+		this.signer_inn=signer_inn;
+	}
+	@Override
+	public String toString() {
+		return "CreateTicketRequest [identifier=" + identifier + ", signer_fname=" + signer_fname + ", signer_sname="
+				+ signer_sname + ", signer_position=" + signer_position + ", signer_inn=" + signer_inn + ", varToken="
+				+ varToken + "]";
+	}	
+}
+class CreateTicketResponse extends Response	
+{
+	public String content;
+	public CreateTicketResponse() {	}
+	@Override
+	public String toString() {
+		return "CreateTicketResponse [content=" + content + ", varMessage=" + varMessage + ", intCode=" + intCode + "]";
+	}	
+}
+class EnqueueTicketRequest extends Request
+{
+	public String identifier;
+	public String docBody;
+	public String signBody;
+	public EnqueueTicketRequest() {	}
+	public EnqueueTicketRequest(String varToken,String identifier,String docBody,String signBody) 
+	{	
+		this.varToken=varToken;
+		this.identifier=identifier;
+		this.docBody=docBody;
+		this.signBody=signBody;
+	}
+	@Override
+	public String toString() {
+		return "EnqueueTicketRequest [identifier=" + identifier + ", docBody=" + docBody + ", signBody=" + signBody
+				+ ", varToken=" + varToken + "]";
+	}	
+}
+class EnqueueTicketResponse extends Response	{	}

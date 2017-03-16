@@ -27,6 +27,32 @@ public class RestExAPI implements IRestExAPI
 		TimeLineResponse resp=(TimeLineResponse)Http.post(url+"TimeLine/GetTimeLine", req, TimeLineResponse.class);
 		return resp.timeline;
 	}
+	@Override
+	public Entity getContent(String authToken, String docId) 
+	{
+		GetContentRequest req=new GetContentRequest(authToken, docId);
+		GetContentResponse resp=(GetContentResponse)Http.post(url+"Content/GetBoth", req, GetContentResponse.class);		
+		return new Entity(resp.body, resp.sign);
+	}
+	@Override
+	public String generateTicket(String varToken, 
+			String identifier, 
+			String signer_fname, 
+			String signer_sname,
+			String signer_position, 
+			String signer_inn) 
+	{
+		CreateTicketRequest req=new CreateTicketRequest(varToken, identifier, signer_fname, signer_sname, signer_position, signer_inn);
+		CreateTicketResponse resp=(CreateTicketResponse)Http.post(url+"Ticket/Generate", req, CreateTicketResponse.class);
+		return resp.content;
+	}
+	@Override
+	public int sendTicket(String authToken, String docId, String docBody, String signBody) 
+	{
+		EnqueueTicketRequest req =new EnqueueTicketRequest(authToken, docId, docBody, signBody);
+		EnqueueTicketResponse resp=(EnqueueTicketResponse)Http.post(url+"Ticket/Enqueue", req, EnqueueTicketResponse.class);
+		return resp.intCode;
+	}
 	
 }
 class AuthorizeRequest
