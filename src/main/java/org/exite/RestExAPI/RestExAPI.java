@@ -8,17 +8,6 @@ public class RestExAPI implements IRestExAPI
 {
 	private final String url="https://api-service.edi.su/Api/Dixy/";	
 	
-	/**
-     * 
-     * @param  login
-     *         Exite login
-     *
-     * @param  pass
-     *         Exite pass
-     *
-     * @throws  RestExAPIEcxeption
-     *          If any error while authorize
-     */
 	@Override
 	public String authorize(String login, String pass) throws RestExAPIEcxeption
 	{
