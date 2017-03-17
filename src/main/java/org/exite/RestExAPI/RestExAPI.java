@@ -8,6 +8,17 @@ public class RestExAPI implements IRestExAPI
 {
 	private final String url="https://api-service.edi.su/Api/Dixy/";	
 	
+	/**
+     * 
+     * @param  login
+     *         Exite login
+     *
+     * @param  pass
+     *         Exite pass
+     *
+     * @throws  RestExAPIEcxeption
+     *          If any error while authorize
+     */
 	@Override
 	public String authorize(String login, String pass) throws RestExAPIEcxeption
 	{
@@ -16,7 +27,7 @@ public class RestExAPI implements IRestExAPI
 		if(resp.intCode!=200)
 			throw new RestExAPIEcxeption(resp.varMessage);
 		return resp.varToken;
-	}
+	}	
 	@Override
 	public List<Company> getCompanies(String authToken, String varGln) throws RestExAPIEcxeption
 	{		

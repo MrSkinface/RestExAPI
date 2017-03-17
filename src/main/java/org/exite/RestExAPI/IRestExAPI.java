@@ -6,58 +6,130 @@ import org.exite.obj.*;
 
 public interface IRestExAPI 
 {
-	/* @params:
-	 * login	- 
-	 * pass 	- 
-	 * */
-	public String authorize(String login, String pass) throws RestExAPIEcxeption;
-	/* @params:
-	 * authToken	- 
-	 * varGln	 	- 
-	 * */
-	public List<Company>getCompanies(String authToken,String varGln) throws RestExAPIEcxeption; 
-	/* @params:
-	 * authToken	- 
-	 * timeFrom	 	- 
-	 * timeTo	 	- 
-	 * */
+	/**
+	 * 
+	 * @param login
+	 * 			Exite login
+	 * @param pass
+	 * 			Exite pass
+	 * @return
+	 * 			string authorize token
+	 * @throws RestExAPIEcxeption
+	 * 			if authorization fails
+	 */
+	public String authorize(String login, String pass) throws RestExAPIEcxeption;	
+	/**
+	 * 
+	 * @param authToken
+	 * 			authorize token
+	 * @param varGln
+	 * 			GLN for which info we want to receive
+	 * @return
+	 * 			List of Company
+	 * @throws RestExAPIEcxeption
+	 * 			if something goes wrong [bad 'varGln', bad 'authToken']
+	 */
+	public List<Company>getCompanies(String authToken,String varGln) throws RestExAPIEcxeption;	
+	/**
+	 * 
+	 * @param authToken
+	 * 			authorize token
+	 * @param timeFrom
+	 * 			time from [YYYY-MM-dd HH:mm:ss]
+	 * @param timeTo
+	 * 			time to [YYYY-MM-dd HH:mm:ss]
+	 * @return
+	 * 			List of Event 
+	 * @throws RestExAPIEcxeption
+	 * 			if something goes wrong [bad 'authToken', bad 'timeFrom', bad 'timeTo']
+	 */
 	public List<Event> getEvents(String authToken, String timeFrom, String timeTo) throws RestExAPIEcxeption;
-	/* @params:
-	 * authToken	- 
-	 * docId	 	- 
-	 * */
+	/**
+	 * 
+	 * @param authToken
+	 * 			authorize token
+	 * @param docId
+	 * 			docId
+	 * @return
+	 * 			Entity
+	 * @throws RestExAPIEcxeption
+	 * 			if something goes wrong [bad 'authToken', bad 'docId']
+	 */
 	public Entity getContent(String authToken, String docId) throws RestExAPIEcxeption;
-	/* @params:
-	 * authToken		- 
-	 * identifier	 	- 
-	 * signer_fname	 	- 
-	 * signer_sname	 	- 
-	 * signer_position	- 
-	 * signer_inn	 	- 
-	 * */
+	/**
+	 * 
+	 * @param authToken
+	 * 			authorize token
+	 * @param identifier
+	 * 			identifier
+	 * @param signer_fname
+	 * 			signer_fname
+	 * @param signer_sname
+	 * 			signer_sname
+	 * @param signer_position
+	 * 			signer_position
+	 * @param signer_inn
+	 * 			signer_inn
+	 * @return
+	 * 			base64 string of xml-ticket
+	 * @throws RestExAPIEcxeption
+	 * 			if something goes wrong [bad 'authToken', bad 'identifier']
+	 */
 	public String generateTicket(String authToken,String identifier,String signer_fname,String signer_sname,String signer_position,String signer_inn) throws RestExAPIEcxeption;
-	/* @params:
-	 * authToken	- 
-	 * docId	 	- 
-	 * docBody	 	- 
-	 * signBody	 	- 
-	 * */
+	/**
+	 * 
+	 * @param authToken
+	 * 			authorize token
+	 * @param docId
+	 * 			docId
+	 * @param docBody
+	 * 			base64 string of xml-ticket
+	 * @param signBody
+	 * 			base64 string of digital signature
+	 * @return
+	 * 			integer code (200 == O.K., otherwise RestExAPIEcxeption will be thrown)
+	 * @throws RestExAPIEcxeption
+	 * 			if something goes wrong [bad 'authToken', bad 'docId', bad 'docBody', bad 'signBody']
+	 */
 	public int sendTicket(String authToken, String docId, String docBody, String signBody) throws RestExAPIEcxeption;
-	/* @params:
-	 * authToken	- 
-	 * identifier	 	- 
-	 * */
+	/**
+	 * 
+	 * @param authToken
+	 * 			authorize token
+	 * @param identifier
+	 * 			identifier
+	 * @return
+	 * 			base64 string of PDF print data
+	 * @throws RestExAPIEcxeption
+	 * 			if something goes wrong [bad 'authToken', bad 'identifier']
+	 */
 	public String getPDFPrint(String authToken,String identifier) throws RestExAPIEcxeption;
-	/* @params:
-	 * authToken	- 
-	 * identifier	 	- 
-	 * */
+	/**
+	 * 
+	 * @param authToken
+	 * 			authorize token
+	 * @param identifier
+	 * 			identifier
+	 * @return
+	 * 			DocumentInfo
+	 * @throws RestExAPIEcxeption
+	 * 			if something goes wrong [bad 'authToken', bad 'identifier']
+	 */
 	public DocumentInfo getDocInfo(String authToken,String identifier) throws RestExAPIEcxeption;
-	/* @params:
-	 * authToken	- 
-	 * docBody	 	- 
-	 * signBody	 	- 
-	 * docType	 	- 
-	 * */
+	/**
+	 * 
+	 * @param authToken
+	 * 			authorize token
+	 * @param docBody
+	 * 			base64 string of xml-ticket
+	 * @param signBody
+	 * 			base64 string of digital signature
+	 * @param docType
+	 * 			one of [ON_SCHFDOPPR, ON_KORSCHFDOPPR, ON_SFAKT, ON_KORSFAKT, DP_OTORG12, DP_IAKTPRM]
+	 * @return
+	 * 			integer code (200 == O.K., otherwise RestExAPIEcxeption will be thrown)
+	 * @throws RestExAPIEcxeption
+	 * 			if something goes wrong [bad 'authToken', bad 'docType', bad 'docBody', bad 'signBody']
+	 */
 	public int sendDocument(String authToken, String docBody, String signBody, DocumentType docType) throws RestExAPIEcxeption;
 }
