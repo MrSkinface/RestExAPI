@@ -3,6 +3,8 @@ package org.exite.RestExAPI;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 
+import org.exite.obj.*;
+
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
@@ -29,6 +31,7 @@ public final class Http
 		return null;
 	}
 }
+
 class Request
 {
 	public String varToken;
@@ -50,6 +53,32 @@ class Response
 	@Override
 	public String toString() {
 		return "Response [varMessage=" + varMessage + ", intCode=" + intCode + "]";
+	}	
+}
+class AuthorizeRequest
+{
+	public String varLogin;
+	public String varPassword;
+	
+	public AuthorizeRequest() {	}
+	public AuthorizeRequest(String varLogin, String varPassword) 
+	{
+		this.varLogin=varLogin;
+		this.varPassword=varPassword;
+	}
+	@Override
+	public String toString() {
+		return "AuthorizeRequest [varLogin=" + varLogin + ", varPassword=" + varPassword + "]";
+	}	
+}
+class AuthorizeResponse extends Response
+{
+	public String varToken;
+	
+	public AuthorizeResponse() {	}	
+	@Override
+	public String toString() {
+		return "AuthorizeResponse [varToken=" + varToken + ", varMessage=" + varMessage + ", intCode=" + intCode + "]";
 	}	
 }
 class CompanyInfoRequest extends Request
@@ -77,39 +106,8 @@ class CompanyInfoResponse extends Response
 				+ "]";
 	}	
 }
-class Company
-{
-	public int intGlnID;
-	public String varInnCode;
-	public String varName;
-	public String varGln;
-	public int varRURegion;
-	public String varStreet;
-	public String varCity;
-	public List<Guid>GUIDs;
-	public Company() {	}
-	@Override
-	public String toString() {
-		return "Company [intGlnID=" + intGlnID + ", varInnCode=" + varInnCode + ", varName=" + varName + ", varGln="
-				+ varGln + ", varRURegion=" + varRURegion + ", varStreet=" + varStreet + ", varCity=" + varCity
-				+ ", GUIDs=" + GUIDs + "]";
-	}	
-}
-class Guid
-{
-	public String varGUID;
-	public String varGuid;
-	public String varName;
-	public String varPrefix;
-	public String varInnCode;
-	public String varEdrpouCode;
-	public Guid() {	}
-	@Override
-	public String toString() {
-		return "Guid [varGUID=" + varGUID + ", varGuid=" + varGuid + ", varName=" + varName + ", varPrefix=" + varPrefix
-				+ ", varInnCode=" + varInnCode + ", varEdrpouCode=" + varEdrpouCode + "]";
-	}	
-}
+
+
 class TimeLineRequest extends Request
 {
 	public String timefrom;
@@ -136,23 +134,6 @@ class TimeLineResponse extends Response
 		return "TimeLineResponse [timeline=" + timeline + ", varMessage=" + varMessage + ", intCode=" + intCode + "]";
 	}	
 }
-class Event
-{
-	public String document_id;
-	public String event_date;
-	public String event_id;
-	public String event_status;
-	public String recipient_id;
-	public String sender_id;
-	public boolean need_reply_reciept;	
-	public Event() {	}
-	@Override
-	public String toString() {
-		return "Event [document_id=" + document_id + ", event_date=" + event_date + ", event_id=" + event_id
-				+ ", event_status=" + event_status + ", recipient_id=" + recipient_id + ", sender_id=" + sender_id
-				+ ", need_reply_reciept=" + need_reply_reciept + "]";
-	}	
-}
 class GetContentRequest extends Request
 {
 	public String identifier;
@@ -167,7 +148,6 @@ class GetContentRequest extends Request
 		return "GetContentRequest [identifier=" + identifier + ", varToken=" + varToken + "]";
 	}	
 }
-
 class GetContentResponse extends Response	
 {	
 	public String body;
@@ -177,22 +157,6 @@ class GetContentResponse extends Response
 	public String toString() {
 		return "GetContentResponse [body=" + body + ", sign=" + sign + ", varMessage=" + varMessage + ", intCode="
 				+ intCode + "]";
-	}	
-}
-
-class Entity
-{
-	public String body;
-	public String sign;
-	public Entity() {	}
-	public Entity(String body,String sign) 
-	{	
-		this.body=body;
-		this.sign=sign;
-	}
-	@Override
-	public String toString() {
-		return "Entity [body=" + body + ", sign=" + sign + "]";
 	}	
 }
 class CreateTicketRequest extends Request
@@ -248,3 +212,66 @@ class EnqueueTicketRequest extends Request
 	}	
 }
 class EnqueueTicketResponse extends Response	{	}
+class GetPDFRequest extends Request
+{
+	public String identifier;
+	public GetPDFRequest() {	}
+	public GetPDFRequest(String varToken,String identifier) 
+	{
+		this.varToken=varToken;
+		this.identifier=identifier;
+	}
+	@Override
+	public String toString() {
+		return "GetPDFRequest [identifier=" + identifier + ", varToken=" + varToken + "]";
+	}	
+}
+class GetPDFResponse extends Response
+{
+	public String form;
+}
+class GetDocInfoRequest extends Request
+{
+	public String identifier; 
+	public GetDocInfoRequest() {	}
+	public GetDocInfoRequest(String varToken,String identifier) 
+	{
+		this.varToken=varToken;
+		this.identifier=identifier;
+	}
+	@Override
+	public String toString() {
+		return "GetDocInfoRequest [identifier=" + identifier + ", varToken=" + varToken + "]";
+	}	
+}
+class GetDocInfoResponse extends Response
+{
+	public DocumentInfo document;
+	public GetDocInfoResponse() {	}
+	@Override
+	public String toString() {
+		return "GetDocInfoResponse [document=" + document + ", varMessage=" + varMessage + ", intCode=" + intCode + "]";
+	}	
+}
+class SendDocRequest extends Request
+{
+	public String body;
+	public String sign;
+	public DocumentType doc_type;
+	
+	public SendDocRequest() {	}
+	public SendDocRequest(String varToken,String body,String sign,DocumentType doc_type) 
+	{	
+		this.varToken=varToken;
+		this.body=body;
+		this.sign=sign;
+		this.doc_type=doc_type;
+	}
+	@Override
+	public String toString() {
+		return "SendDocRequest [body=" + body + ", sign=" + sign + ", doc_type=" + doc_type + ", varToken=" + varToken
+				+ "]";
+	}		
+}
+class SendDocResponse extends Response {	}
+
