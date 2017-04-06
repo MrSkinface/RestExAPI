@@ -159,6 +159,37 @@ class GetContentResponse extends Response
 				+ intCode + "]";
 	}	
 }
+class GetContentFNSTRANSRequest extends GetContentRequest 
+{
+	public GetContentFNSTRANSRequest() 
+	{
+		super();
+	}
+	public GetContentFNSTRANSRequest(String varToken, String identifier) 
+	{
+		super(varToken, identifier);
+	}		
+}
+class GetContentFNSTRANSResponse extends Response	
+{	
+	public String body;
+	public List<FnsTransSign> sign;
+	public GetContentFNSTRANSResponse() {	}
+	@Override
+	public String toString() {
+		return "GetContentFNSTRANSResponse [body=" + body + ", sign=" + sign + ", varMessage=" + varMessage
+				+ ", intCode=" + intCode + "]";
+	}		
+}
+class FnsTransSign
+{
+	public String body;
+	public String type;
+	@Override
+	public String toString() {
+		return "FnsTransSign [body=" + body + ", type=" + type + "]";
+	}	
+}
 class CreateTicketRequest extends Request
 {
 	public String identifier;
@@ -195,19 +226,19 @@ class CreateTicketResponse extends Response
 class EnqueueTicketRequest extends Request
 {
 	public String identifier;
-	public String docBody;
-	public String signBody;
+	public String xml;
+	public String sign;
 	public EnqueueTicketRequest() {	}
-	public EnqueueTicketRequest(String varToken,String identifier,String docBody,String signBody) 
+	public EnqueueTicketRequest(String varToken,String identifier,String xml,String sign) 
 	{	
 		this.varToken=varToken;
 		this.identifier=identifier;
-		this.docBody=docBody;
-		this.signBody=signBody;
+		this.xml=xml;
+		this.sign=sign;
 	}
 	@Override
 	public String toString() {
-		return "EnqueueTicketRequest [identifier=" + identifier + ", docBody=" + docBody + ", signBody=" + signBody
+		return "EnqueueTicketRequest [identifier=" + identifier + ", xml=" + xml + ", sign=" + sign
 				+ ", varToken=" + varToken + "]";
 	}	
 }

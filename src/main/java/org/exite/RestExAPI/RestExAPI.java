@@ -41,8 +41,16 @@ public class RestExAPI implements IRestExAPI
 		GetContentRequest req=new GetContentRequest(authToken, docId);
 		GetContentResponse resp=(GetContentResponse)Http.post(url+"Content/GetBoth", req, GetContentResponse.class);
 		if(resp.intCode!=200)
-			throw new RestExAPIEcxeption(resp.varMessage);
+			return getContentFNS_TRANS_DATA(authToken, docId);
 		return new Entity(resp.body, resp.sign);
+	}
+	private Entity getContentFNS_TRANS_DATA(String authToken, String docId) throws RestExAPIEcxeption
+	{
+		GetContentFNSTRANSRequest req=new GetContentFNSTRANSRequest(authToken, docId);
+		GetContentFNSTRANSResponse resp=(GetContentFNSTRANSResponse)Http.post(url+"Content/GetDocWithSignContent", req, GetContentFNSTRANSResponse.class);
+		if(resp.intCode!=200)
+			throw new RestExAPIEcxeption(resp.varMessage);
+		return new Entity(resp.body, resp.sign.get(0).body);
 	}
 	@Override
 	public String generateTicket(String varToken, 
