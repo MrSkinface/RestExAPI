@@ -1,6 +1,7 @@
 package org.exite.RestExAPI;
 
 import java.io.UnsupportedEncodingException;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.exite.obj.*;
@@ -112,6 +113,7 @@ class TimeLineRequest extends Request
 {
 	public String timefrom;
 	public String timeto;
+	public EventListMode mode;
 	
 	public TimeLineRequest() {	}
 	public TimeLineRequest(String varToken, String timefrom,String timeto) 
@@ -120,10 +122,18 @@ class TimeLineRequest extends Request
 		this.timefrom=timefrom;
 		this.timeto=timeto;
 	}
+	public TimeLineRequest(String varToken, String timefrom,String timeto, EventListMode mode) 
+	{	
+		this.varToken=varToken;
+		this.timefrom=timefrom;
+		this.timeto=timeto;
+		this.mode=mode;
+	}
 	@Override
 	public String toString() {
-		return "TimeLineRequest [timefrom=" + timefrom + ", timeto=" + timeto + "]";
-	}	
+		return "TimeLineRequest [timefrom=" + timefrom + ", timeto=" + timeto + ", mode=" + mode + ", varToken="
+				+ varToken + "]";
+	}		
 }
 class TimeLineResponse extends Response
 {
@@ -305,4 +315,65 @@ class SendDocRequest extends Request
 	}		
 }
 class SendDocResponse extends Response {	}
+class SendUPDRequest extends Request
+{
+	public String body;
+	public List<UPDSign> sign;
+	public DocumentType doc_type;
+	
+	public SendUPDRequest() {	}
+	public SendUPDRequest(String varToken, String body, DocumentType doc_type) 
+	{	
+		this.varToken=varToken;
+		this.body=body;		
+		this.doc_type=doc_type;	
+	}
+	public SendUPDRequest(String varToken, String body, String sign, DocumentType doc_type) 
+	{	
+		this.varToken=varToken;
+		this.body=body;
+		this.sign=new LinkedList<UPDSign>();
+		this.sign.add(new UPDSign(sign));
+		this.doc_type=doc_type;	
+	}	
+	@Override
+	public String toString() {
+		return "SendUPDRequest [body=" + body + ", sign=" + sign + ", doc_type=" + doc_type + "]";
+	}	
+}
+class CreateUPDAnswerRequest extends Request
+{
+	public String identifier;
+	public AnswerData answer_data;
+	public CreateUPDAnswerRequest() {	}
+	public CreateUPDAnswerRequest(String varToken,
+			String identifier,
+			String signer_fname,
+			String signer_sname,
+			String signer_position,
+			String signer_inn,
+			String rec_sodoper,	
+			String signer_osnpoln,
+			int signer_oblpoln,
+			int signer_status) 
+	{	
+		this.varToken=varToken;
+		this.identifier=identifier;
+		this.answer_data=new AnswerData(signer_fname, signer_sname, signer_position, signer_inn, rec_sodoper, signer_osnpoln, signer_oblpoln, signer_status);
+	}
+	@Override
+	public String toString() {
+		return "CreateUPDAnswerRequest [identifier=" + identifier + ", answer_data=" + answer_data + ", varToken="
+				+ varToken + "]";
+	}		
+}
+class CreateUPDAnswerRsponse extends CreateTicketResponse 
+{
+	public CreateUPDAnswerRsponse() {	}
+	@Override
+	public String toString() {
+		return "CreateUPDAnswerRsponse [content=" + content + ", varMessage=" + varMessage + ", intCode=" + intCode
+				+ "]";
+	}		
+}
 

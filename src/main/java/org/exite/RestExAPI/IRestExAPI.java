@@ -48,6 +48,22 @@ public interface IRestExAPI
 	 * 
 	 * @param authToken
 	 * 			authorize token
+	 * @param timeFrom
+	 * 			time from [YYYY-MM-dd HH:mm:ss]
+	 * @param timeTo
+	 * 			time to [YYYY-MM-dd HH:mm:ss]
+	 * @param mode
+	 * 			one of EventListMode
+	 * @return
+	 * 			List of Event 
+	 * @throws RestExAPIEcxeption
+	 * 			if something goes wrong [bad 'authToken', bad 'timeFrom', bad 'timeTo']
+	 */
+	public List<Event> getEvents(String authToken, String timeFrom, String timeTo, EventListMode mode) throws RestExAPIEcxeption;
+	/**
+	 * 
+	 * @param authToken
+	 * 			authorize token
 	 * @param docId
 	 * 			docId
 	 * @return
@@ -132,4 +148,41 @@ public interface IRestExAPI
 	 * 			if something goes wrong [bad 'authToken', bad 'docType', bad 'docBody', bad 'signBody']
 	 */
 	public int sendDocument(String authToken, String docBody, String signBody, DocumentType docType) throws RestExAPIEcxeption;
+	/**
+	 * 
+	 * @param authToken
+	 * 			authorize token
+	 * @param identifier
+	 * 			identifier
+	 * @param signer_fname
+	 * 			signer_fname
+	 * @param signer_sname
+	 * 			signer_sname
+	 * @param signer_position
+	 * 			signer_position
+	 * @param signer_inn
+	 * 			signer_inn
+	 * @param rec_sodoper
+	 * 			rec_sodoper
+	 * @param signer_osnpoln
+	 * 			signer_osnpoln
+	 * @param signer_oblpoln
+	 * 			signer_oblpoln
+	 * @param signer_status
+	 * 			signer_status
+	 * @return
+	 * 			base64 string of xml-ticket
+	 * @throws RestExAPIEcxeption
+	 * 			if something goes wrong [bad 'authToken', bad 'identifier']
+	 */
+	public String generateUPDAnswer(String authToken, 
+			String identifier, 
+			String signer_fname, 
+			String signer_sname,
+			String signer_position, 
+			String signer_inn, 
+			String rec_sodoper,
+			String signer_osnpoln,
+			int signer_oblpoln, 
+			int signer_status) throws RestExAPIEcxeption;
 }
