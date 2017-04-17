@@ -3,11 +3,19 @@ package org.exite.RestExAPI;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.http.HttpHost;
 import org.exite.obj.*;
 
 public class RestExAPI implements IRestExAPI
 {
-	private final String url="https://api-service.edi.su/Api/Dixy/";	
+	private final String url="https://api-service.edi.su/Api/Dixy/";
+	public static HttpHost proxy=null; 
+	
+	public RestExAPI() {	}
+	public RestExAPI(HttpHost proxy) 
+	{	
+		RestExAPI.proxy=proxy;
+	}
 	
 	@Override
 	public String authorize(String login, String pass) throws RestExAPIEcxeption

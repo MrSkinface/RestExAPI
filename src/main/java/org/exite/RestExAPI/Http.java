@@ -17,11 +17,14 @@ public final class Http
 	{		
 		try 
 		{
-			HttpResponse<JsonNode> jsonResponse = Unirest.post(address)
+			HttpResponse<JsonNode> jsonResponse;
+			if(RestExAPI.proxy!=null)
+				Unirest.setProxy(RestExAPI.proxy);
+			jsonResponse=Unirest.post(address)
 					.header("accept", "application/json")
 					.body(Utils.toJson(obj).getBytes("UTF-8"))
 					.asJson();
-			return Utils.fromJson(jsonResponse.getBody().toString(), c);
+			return Utils.fromJson(jsonResponse.getBody().toString(), c);			
 		} catch (UnsupportedEncodingException e) 
 		{			
 			e.printStackTrace();
