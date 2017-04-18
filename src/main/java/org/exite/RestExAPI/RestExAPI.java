@@ -85,6 +85,41 @@ public class RestExAPI implements IRestExAPI
 		return resp.content;
 	}
 	@Override
+	public String generateReject(String authToken, 
+			String identifier, 
+			String signer_fname, 
+			String signer_sname,
+			String signer_position, 
+			String signer_inn, 
+			String comment) throws RestExAPIEcxeption 
+	{
+		CreateTicketRequest req=new CreateTicketRequest(authToken, identifier, signer_fname, signer_sname, signer_position, signer_inn, comment);
+		CreateTicketResponse resp=(CreateTicketResponse)Http.post(url+"Ticket/Generate", req, CreateTicketResponse.class);
+		if(resp.intCode!=200)
+			throw new RestExAPIEcxeption(resp.varMessage);
+		return resp.content;
+	}
+	@Override
+	public String generateAnswer(String varToken, 
+			String identifier, 
+			String rec_date, 
+			String rec_fname,
+			String rec_patronymic, 
+			String rec_position, 
+			String rec_sname, 
+			String signer_fname, 
+			String signer_sname,
+			String signer_position, 
+			String signer_inn,
+			String signer_patronymic) throws RestExAPIEcxeption 
+	{
+		CreateAnswerRequest req=new CreateAnswerRequest(varToken, identifier, rec_date, rec_fname, rec_patronymic, rec_position, rec_sname, signer_fname, signer_sname, signer_position, signer_inn,signer_patronymic);
+		CreateAnswerResponse resp=(CreateAnswerResponse)Http.post(url+"Ticket/Generate", req, CreateAnswerResponse.class);
+		if(resp.intCode!=200)
+			throw new RestExAPIEcxeption(resp.varMessage);
+		return resp.content;
+	}
+	@Override
 	public int sendTicket(String authToken, String docId, String docBody, String signBody) throws RestExAPIEcxeption
 	{
 		EnqueueTicketRequest req =new EnqueueTicketRequest(authToken, docId, docBody, signBody);

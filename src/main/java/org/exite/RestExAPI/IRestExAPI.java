@@ -96,6 +96,69 @@ public interface IRestExAPI
 	 * 
 	 * @param authToken
 	 * 			authorize token
+	 * @param identifier
+	 * 			identifier
+	 * @param signer_fname
+	 * 			signer_fname
+	 * @param signer_sname
+	 * 			signer_sname
+	 * @param signer_position
+	 * 			signer_position
+	 * @param signer_inn
+	 * 			signer_inn
+	 * @param comment
+	 * 			comment for uvutoch
+	 * @return
+	 * 			base64 string of xml-ticket
+	 * @throws RestExAPIEcxeption
+	 * 			if something goes wrong [bad 'authToken', bad 'identifier']
+	 */
+	public String generateReject(String authToken,String identifier,String signer_fname,String signer_sname,String signer_position,String signer_inn,String comment) throws RestExAPIEcxeption;
+	/**
+	 * 
+	 * @param varToken
+	 * 			authorize token
+	 * @param identifier
+	 * 			identifier
+	 * @param rec_date
+	 * 			rec_date
+	 * @param rec_fname
+	 * 			rec_fname
+	 * @param rec_patronymic
+	 * 			rec_patronymic
+	 * @param rec_position
+	 * 			rec_position
+	 * @param rec_sname
+	 * 			rec_sname
+	 * @param signer_fname
+	 * 			signer_fname
+	 * @param signer_sname
+	 * 			signer_sname
+	 * @param signer_position
+	 * 			signer_position
+	 * @param signer_inn
+	 * 			signer_inn
+	 * @return
+	 * 			base64 string of xml-answer
+	 * @throws RestExAPIEcxeption
+	 * 			if something goes wrong [bad 'authToken', bad 'identifier']
+	 */
+	public String generateAnswer(String varToken,
+			String identifier,
+			String rec_date,
+			String rec_fname,
+			String rec_patronymic,
+			String rec_position,
+			String rec_sname,
+			String signer_fname,
+			String signer_sname,
+			String signer_position,
+			String signer_inn,
+			String signer_patronymic) throws RestExAPIEcxeption;
+	/**
+	 * 
+	 * @param authToken
+	 * 			authorize token
 	 * @param docId
 	 * 			docId
 	 * @param docBody

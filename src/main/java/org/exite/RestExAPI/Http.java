@@ -210,6 +210,7 @@ class CreateTicketRequest extends Request
 	public String signer_sname;
 	public String signer_position;
 	public String signer_inn;
+	public String comment;
 	public CreateTicketRequest() {	}
 	public CreateTicketRequest(String varToken,String identifier,String signer_fname,String signer_sname,String signer_position,String signer_inn) 
 	{	
@@ -220,11 +221,21 @@ class CreateTicketRequest extends Request
 		this.signer_position=signer_position;
 		this.signer_inn=signer_inn;
 	}
+	public CreateTicketRequest(String varToken,String identifier,String signer_fname,String signer_sname,String signer_position,String signer_inn,String comment) 
+	{	
+		this.varToken=varToken;
+		this.identifier=identifier;
+		this.signer_fname=signer_fname;
+		this.signer_sname=signer_sname;
+		this.signer_position=signer_position;
+		this.signer_inn=signer_inn;
+		this.comment=comment;
+	}
 	@Override
 	public String toString() {
 		return "CreateTicketRequest [identifier=" + identifier + ", signer_fname=" + signer_fname + ", signer_sname="
-				+ signer_sname + ", signer_position=" + signer_position + ", signer_inn=" + signer_inn + ", varToken="
-				+ varToken + "]";
+				+ signer_sname + ", signer_position=" + signer_position + ", signer_inn=" + signer_inn + ", comment="
+				+ comment + ", varToken=" + varToken + "]";
 	}	
 }
 class CreateTicketResponse extends Response	
@@ -236,6 +247,36 @@ class CreateTicketResponse extends Response
 		return "CreateTicketResponse [content=" + content + ", varMessage=" + varMessage + ", intCode=" + intCode + "]";
 	}	
 }
+class CreateAnswerRequest extends Request
+{
+	public String identifier;
+	public AnswerData answer_data;
+	public CreateAnswerRequest() {	}
+	public CreateAnswerRequest(String varToken, 
+			String identifier, 
+			String rec_date, 
+			String rec_fname,
+			String rec_patronymic, 
+			String rec_position, 
+			String rec_sname, 
+			String signer_fname, 
+			String signer_sname,
+			String signer_position, 
+			String signer_inn,
+			String signer_patronymic) 
+	{	
+		this.varToken=varToken;
+		this.identifier=identifier;		
+		this.answer_data=new AnswerData(signer_fname, signer_sname, signer_position, signer_inn, signer_patronymic, rec_date, rec_fname, rec_patronymic, rec_position, rec_sname);
+	}
+	@Override
+	public String toString() {
+		return "CreateAnswerRequest [identifier=" + identifier + ", answer_data=" + answer_data + ", varToken="
+				+ varToken + "]";
+	}	
+}
+class CreateAnswerResponse extends CreateTicketResponse {	}
+
 class EnqueueTicketRequest extends Request
 {
 	public String identifier;
