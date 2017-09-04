@@ -15,8 +15,7 @@ public class RestExAPI implements IRestExAPI
 	public RestExAPI(HttpHost proxy) 
 	{	
 		RestExAPI.proxy=proxy;
-	}
-	
+	}	
 	@Override
 	public String authorize(String login, String pass) throws RestExAPIEcxeption
 	{
