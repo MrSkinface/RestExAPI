@@ -8,7 +8,7 @@ import org.exite.obj.*;
 
 public class RestExAPI implements IRestExAPI
 {
-	private final String url="https://api-service.edi.su/Api/Dixy/";
+	private final String url="https://api-service.e-vo.ru/Api/Dixy/";
 	public static HttpHost proxy=null; 
 	
 	public RestExAPI() {	}
