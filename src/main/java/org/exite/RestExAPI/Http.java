@@ -1,9 +1,13 @@
 package org.exite.RestExAPI;
 
 import java.io.UnsupportedEncodingException;
+import java.security.cert.X509Certificate;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
 import org.exite.obj.*;
 
 import com.mashape.unirest.http.HttpResponse;
@@ -11,28 +15,62 @@ import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
+
 public final class Http 
 {
 	public static Object post(String address,Object obj,Class<? extends Object> c)
-	{		
-		try 
+	{
+		try
 		{
 			HttpResponse<JsonNode> jsonResponse;
-			if(RestExAPI.proxy!=null)
+			if(RestExAPI.proxy != null){
 				Unirest.setProxy(RestExAPI.proxy);
-			jsonResponse=Unirest.post(address)
+			}
+			if(RestExAPI.trustAllCertificate){
+				Unirest.setHttpClient(getTrustedClient());
+			}
+			jsonResponse = Unirest.post(address)
 					.header("accept", "application/json")
 					.body(Utils.toJson(obj).getBytes("UTF-8"))
 					.asJson();
-			return Utils.fromJson(jsonResponse.getBody().toString(), c);			
-		} catch (UnsupportedEncodingException e) 
-		{			
+			return Utils.fromJson(jsonResponse.getBody().toString(), c);
+		} catch (UnsupportedEncodingException e)
+		{
 			e.printStackTrace();
-		} catch (UnirestException e) 
+		} catch (UnirestException e)
 		{
 			e.printStackTrace();
 		}
 		return null;
+	}
+	private static CloseableHttpClient getTrustedClient(){
+		try{
+			TrustManager[] trustAllCerts = new TrustManager[] { new X509TrustManager() {
+				public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+					System.out.println("getAcceptedIssuers");
+					return null;
+				}
+				public void checkClientTrusted(X509Certificate[] certs, String authType) {
+					System.out.println("checkClientTrusted");
+				}
+				public void checkServerTrusted(X509Certificate[] certs, String authType) {
+					System.out.println("checkServerTrusted");
+				}
+			} };
+			SSLContext sslcontext = SSLContext.getInstance("SSL");
+			sslcontext.init(null, trustAllCerts, null);
+			HttpsURLConnection.setDefaultSSLSocketFactory(sslcontext.getSocketFactory());
+			SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(sslcontext);
+			CloseableHttpClient httpclient = HttpClients.custom().setSSLSocketFactory(sslsf).build();
+			return httpclient;
+		}catch (Exception e){
+			e.printStackTrace();
+			return null;
+		}
 	}
 }
 

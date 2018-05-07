@@ -8,14 +8,20 @@ import org.exite.obj.*;
 
 public class RestExAPI implements IRestExAPI
 {
-	private final String url="https://api-service.e-vo.ru/Api/Dixy/";
-	public static HttpHost proxy=null; 
+	private final String url = "https://api-service.e-vo.ru/Api/Dixy/";
+	public static HttpHost proxy = null;
+	public static boolean trustAllCertificate = false;
 	
 	public RestExAPI() {	}
 	public RestExAPI(HttpHost proxy) 
 	{	
 		RestExAPI.proxy=proxy;
-	}	
+	}
+
+	public void trustAll(){
+		trustAllCertificate = true;
+	}
+
 	@Override
 	public String authorize(String login, String pass) throws RestExAPIEcxeption
 	{
